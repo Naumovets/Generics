@@ -1,36 +1,50 @@
-public class Box <A,B,C>{
+import java.util.List;
 
-    private A a;
-    private B b;
-    private C c;
+public class Box <T extends Number & Comparable<T>>{
 
-    public Box(A a, B b, C c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
+    private T[] array;
+
+    public Box(T... array) {
+        this.array = array;
     }
 
-    public A getA() {
-        return a;
+    public T[] getArray() {
+        return array;
     }
 
-    public void setA(A a) {
-        this.a = a;
+    public void setArray(T[] array) {
+        this.array = array;
     }
 
-    public B getB() {
-        return b;
+    public double avg(){
+        double result = 0;
+        for(T element : array){
+            result += ((Number) element).doubleValue();
+        }
+        return result / array.length;
     }
 
-    public void setB(B b) {
-        this.b = b;
+    public static void method(List<? extends Number> numbers){
+
     }
 
-    public C getC() {
-        return c;
+    public static <Y> Y getFirstElement(List<Y> list){
+        return list.get(0);
     }
 
-    public void setC(C c) {
-        this.c = c;
+    public static <U> void transfer(List<? extends U> src, List<? super U> dst){
+        dst.addAll(src);
+        src.clear();
+    }
+
+//  ? означает, что может прилететь коробка параметризованная любым типом
+    public int compare(Box<?> another){
+        if(avg() > another.avg()){
+            return 1;
+        }else if(avg() == another.avg()){
+            return 0;
+        }else{
+            return -1;
+        }
     }
 }
